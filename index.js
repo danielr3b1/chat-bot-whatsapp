@@ -47,7 +47,6 @@ const main = async () => {
         database: adapterDB,
     })
     QRPortalWeb({
-        name: "J&H Group Bot",
         port: PORT
     })
 }
