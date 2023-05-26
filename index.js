@@ -19,8 +19,8 @@ const PORT = process.env.PORT || 3000
  */
 
 const flowImage = addKeyword('1').addAnswer('Este mensaje envia una imagen', {
-    media: 'https://trabajosenatipruebas.store/archivos/catalogo.pdf',
-}).addAnswer("Te envie el catalogo de ferreteria en PDF ☝")
+    media: 'https://hostnation.store/pdf/catalogos_producto.pdf',
+}).addAnswer(["Te envie el catalogo de ferreteria en PDF ☝"], null, null, [flowPrincipal])
 
 const flowPrincipal = addKeyword(['hola', 'buenas', 'ola', 'consulta', 'hello', 'que tal', 'pregunta'])
     .addAnswer('*¡Hola* 👋*,* *Bienvenido a nuestro canal de atención* *(J&H Mendoza)* Estamos listos para atenderte. Por favor, selecciona la opción 👇')
