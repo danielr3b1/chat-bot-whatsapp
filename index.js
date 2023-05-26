@@ -18,9 +18,112 @@ const PORT = process.env.PORT || 3000
  * Primero declaras los submenus 1.1 y 2.1, luego el 1 y 2 y al final el principal.
  */
 
-const flowImage = addKeyword('1').addAnswer('Este mensaje envia una imagen', {
+const flowPDFProductos = addKeyword('1').addAnswer('Este mensaje envia una imagen', {
     media: 'https://hostnation.store/pdf/catalogos_producto.pdf',
-}).addAnswer(["Te envie el catalogo de ferreteria en PDF ☝"])
+}).addAnswer(
+    [
+        "Te envie el catalogo de ferreteria en PDF ☝\n*Elige otras opciones:*",
+        "2️⃣ Catalogos casas",
+        "3️⃣ Catalogos bloquetas",
+        "4️⃣ Metodos de pago",
+        "5️⃣ Consultar con un *asesor*"
+    ],
+    {
+        capture: true
+    },
+    (ctx, flow) => {
+        if (ctx.body === '2') {
+            flow.gotoFlow(flowPDFCasas)
+        } else if (ctx.body === '3') {
+            flow.gotoFlow(flowPDFBloquetas)
+        } else if (ctx.body === '4') {
+            flow.gotoFlow(flowMetodoPagos)
+        } else if (ctx.body === '5') {
+            flow.gotoFlow(flowAsesor)
+        }
+    }
+)
+
+const flowPDFCasas = addKeyword('2').addAnswer('Este mensaje envia una imagen', {
+    media: 'https://hostnation.store/pdf/catalogos_casas.pdf',
+}).addAnswer(
+    [
+        "Te envie el catalogo de casas en PDF ☝\n*Elige otras opciones:*",
+        "1️⃣ Catalogos ferreteria",
+        "3️⃣ Catalogos bloquetas",
+        "4️⃣ Metodos de pago",
+        "5️⃣ Consultar con un *asesor*"
+    ],
+    {
+        capture: true
+    },
+    (ctx, flow) => {
+        if (ctx.body === '1') {
+            flow.gotoFlow(flowPDFProductos)
+        } else if (ctx.body === '3') {
+            flow.gotoFlow(flowPDFBloquetas)
+        } else if (ctx.body === '4') {
+            flow.gotoFlow(flowMetodoPagos)
+        } else if (ctx.body === '5') {
+            flow.gotoFlow(flowAsesor)
+        }
+    }
+)
+
+const flowPDFBloquetas = addKeyword('3').addAnswer(
+    [
+        "Bloquetas no disponible por el momento. ☝\n*Elige otras opciones:*",
+        "1️⃣ Catalogos ferreteria",
+        "2️⃣ Catalogos casas",
+        "4️⃣ Metodos de pago",
+        "5️⃣ Consultar con un *asesor*"
+    ],
+    {
+        capture: true
+    },
+    (ctx, flow) => {
+        if (ctx.body === '1') {
+            flow.gotoFlow(flowPDFProductos)
+        } else if (ctx.body === '2') {
+            flow.gotoFlow(flowPDFCasas)
+        } else if (ctx.body === '4') {
+            flow.gotoFlow(flowMetodoPagos)
+        } else if (ctx.body === '5') {
+            flow.gotoFlow(flowAsesor)
+        }
+    }
+)
+
+const flowMetodoPagos = addKeyword('4').addAnswer(
+    [
+        "Metodos de pagos no disponible por el momento. ☝\n*Elige otras opciones:*",
+        "1️⃣ Catalogos ferreteria",
+        "2️⃣ Catalogos casas",
+        "3️⃣ Catalogos bloquetas",
+        "5️⃣ Consultar con un *asesor*"
+    ],
+    {
+        capture: true
+    },
+    (ctx, flow) => {
+        if (ctx.body === '1') {
+            flow.gotoFlow(flowPDFProductos)
+        } else if (ctx.body === '2') {
+            flow.gotoFlow(flowPDFCasas)
+        } else if (ctx.body === '3') {
+            flow.gotoFlow(flowPDFBloquetas)
+        } else if (ctx.body === '5') {
+            flow.gotoFlow(flowAsesor)
+        }
+    }
+)
+
+const flowAsesor = addKeyword('5').addAnswer(
+    [
+        "🙋‍♀️🙋‍♂️",
+        "¡Listo! Ahora estás en la fila de atencion, esto puede tardar unos minutos. Un asesor especializado te atendera."
+    ]
+)
 
 const flowPrincipal = addKeyword(['hola', 'buenas', 'ola', 'consulta', 'hello', 'que tal', 'pregunta'])
     .addAnswer('*¡Hola* 👋*,* *Bienvenido a nuestro canal de atención* *(J&H Mendoza)* Estamos listos para atenderte. Por favor, selecciona la opción 👇')
@@ -34,7 +137,7 @@ const flowPrincipal = addKeyword(['hola', 'buenas', 'ola', 'consulta', 'hello', 
         ],
         null,
         null,
-        [flowImage]
+        [flowPDFProductos, flowPDFCasas, flowPDFBloquetas, flowMetodoPagos, flowAsesor]
     )
 
 const main = async () => {
