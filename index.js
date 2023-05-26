@@ -4,6 +4,7 @@ const { createBot, createProvider, createFlow, addKeyword } = require('@bot-what
 const QRPortalWeb = require('@bot-whatsapp/portal')
 const WsProvider  = require('@bot-whatsapp/provider/baileys')
 const MockAdapter = require('@bot-whatsapp/database/mock')
+const PORT = process.env.PORT || 3000
 
 /**
  * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
@@ -47,7 +48,7 @@ const main = async () => {
     })
     QRPortalWeb({
         name: "J&H Group Bot",
-        port: "3005"
+        port: PORT
     })
 }
 
